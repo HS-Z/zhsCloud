@@ -15,8 +15,6 @@
 		<version>${zhsCloud.version}</version>
 	</parent>
 
-
-
 	<dependencies>
 
 		<dependency>
@@ -25,8 +23,14 @@
 			<version>${zhsCommon.version}</version>
 		</dependency>
 
-	</dependencies>
 
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>${springBoot-admin.version}</version>
+		</dependency>
+
+	</dependencies>
 
 
 </project>
