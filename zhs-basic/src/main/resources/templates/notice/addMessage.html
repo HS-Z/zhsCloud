@@ -1,0 +1,196 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+    <script src="/js/area.js"></script>   <!--省市县三级联动-->
+
+
+	<!--导航栏-->
+	<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+		<ul class="breadcrumb col-xs-3">
+			<li class="active">新增消息</li>
+		</ul>
+	</div>
+
+	<div class="col-xs-12" id="formData" style="background: white">
+
+		<form>
+
+			<br/>
+			<br/>
+
+			<div class="row">
+				<div class="col-xs-2">
+					<label class="pull-right vertical-center">消息类型 <span style="color: red">*</span></label>
+				</div>
+				<div class="col-xs-3">
+					<select class="form-control chosen-select" id="messageType" name="messageType" data-placeholder="请选择消息类型">
+						<option value="">请选择消息类型</option>
+						<option th:each="dictionary:${dictionaryList}" th:value="${dictionary.code}" th:text="${dictionary.name}"></option>
+					</select>
+				</div>
+				<div class="col-xs-2">
+					<label class="pull-right vertical-center">发送范围 <span style="color: red">*</span></label>
+				</div>
+				<div class="col-xs-3">
+					<select class="chosen-select form-control" id="sendRange" name="sendRange" data-placeholder="请选择发送范围">
+						<option value="">请选择发送范围</option>
+						<option value="AL">全局</option>
+						<option value="AL">个人</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-2">
+					<label class="pull-right vertical-center">省份 <span style="color: red">*</span></label>
+				</div>
+				<div class="col-xs-3">
+					<select class="form-control chosen-select" id="province" name="province" data-placeholder="请选择省份名称">
+						<option value="">请选择省份名称</option>
+					</select>
+				</div>
+			</div>
+
+			<br/>
+
+			<div class="row">
+				<div class="col-xs-2">
+					<label class="pull-right vertical-center">标题 <span style="color: red">*</span></label>
+				</div>
+				<div class="col-xs-8">
+					<input type="text" class="form-control pull-left" id="title" name="title"/>  <!--id="name"时，无法取到值-->
+				</div>
+			</div>
+
+			<br/>
+
+			<div class="row">
+				<div class="col-xs-2">
+					<label class="pull-right vertical-center">消息内容 <span style="color: red">&nbsp;</span></label>
+				</div>
+				<div class="col-xs-8" id="editor">
+
+				</div>
+			</div>
+
+			<br/>
+			<br/>
+
+			<div class="row">
+				<div class="col-xs-6 pull-left">
+					<div class="col-xs-3 pull-right">
+						<!-- type="button" 阻止表单提交，默认情况下，type为submit-->
+						<button type="button" class="form-control pull-right btn btn-primary orange" onclick="save()">确认</button>
+					</div>
+				</div>
+				<div class="col-xs-6 pull-right">
+					<div class="col-xs-3 pull-left">
+						<!-- type="button" 阻止表单提交，默认情况下，type为submit-->
+						<button type="button" class="form-control pull-left btn" data-dismiss="modal" aria-hidden="true">取消</button>
+					</div>
+				</div>
+			</div>
+
+			<br/>
+			<br/>
+
+		</form>
+
+	</div>
+
+	<div style="display: none">
+		<style>
+			/*内容垂直居中*/
+			.vertical-center{
+				height: 34px;
+				line-height: 34px;
+				overflow: hidden;
+			}
+		</style>
+	</div>
+
+</html>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('.chosen-select').chosen();
+    });
+
+
+    $("#province").click(function () {
+
+        alert("nihao");
+
+        $.ajax({
+            type: "Post",
+            url: "cityInfo/getAreaList",
+            data: {code:"",type:"province"},
+            dataType: "JSON",
+            success: function (data) {
+                if (data.success) {
+                    $("#province").empty();
+                    $("#province").append("<option value=''>请选择省份名称</option>");
+                    $.each(data.obj, function (i, item) {
+                        $("#province").append("<option value=' "+ item.id +" '> "+ item.name +" </option>");
+                    });
+                }else {
+                    layer.msg(data.msg,{icon: 5});
+                }
+            }, error: function (data) {
+
+            }
+        });
+
+    });
+
+
+    //富文本框
+    var E = window.wangEditor;
+    var editor = new E('#editor');
+    editor.create();
+
+
+    function save() {
+
+        var messageType=$("#messageType").val();
+        var sendRange=$("#sendRange").val();
+        var title=$("#title").val();
+
+        var content=editor.txt.html();  //富文本框内容
+
+        if (isEmptyForString(messageType)){
+            layer.msg("消息类型不能为空",{icon: 5});
+            return false;
+		}
+        if (isEmptyForString(title)){
+            layer.msg("标题不能为空",{icon: 5});
+            return false;
+        }
+		var formData = {
+            messageType:messageType,
+            sendRange:sendRange,
+            title:title,
+            content:content
+		};
+
+        $.ajax({
+            type: "Post",
+            url: "message/saveOrEdit",
+            data: formData,
+            dataType: "JSON",
+            success: function (data) {
+                if (data.success) {
+                    layer.msg(data.msg,{icon: 6});
+
+                    window.history.go(-1);  //返回上一页并刷新
+                }else {
+                    layer.msg(data.msg,{icon: 5});
+				}
+            }, error: function (data) {
+
+            }
+        });
+    }
+
+</script>

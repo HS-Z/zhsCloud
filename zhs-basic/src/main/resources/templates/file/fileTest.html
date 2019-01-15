@@ -1,0 +1,188 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--导航栏-->
+<div class="breadcrumbs" id="breadcrumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-list-ul home-icon"></i>
+			<a href="#">系统管理</a>
+		</li>
+		<li class="active">文件管理</li>
+	</ul>
+</div>
+
+<div class="col-xs-12" id="formData">
+
+	<h4>单文件上传</h4>
+
+	<form id="fileFormOne" method="post" enctype="multipart/form-data">
+
+		<!--样式太丑，不显示-->
+		<input type="file" name="file" id="file" style="display: none;">
+
+		<div class="row">
+			<div class="col-xs-4">
+				<div class="input-group">
+					<input type="text" class="form-control" id="fileName1" name="fileName1" placeholder="上传文件名称" readonly/>
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default no-border btn-sm" onclick="chooseFileOne()">
+							选择文件
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-1">
+				<!-- type="button" 阻止表单提交，默认情况下，type为submit-->
+				<button type="button" class="form-control pull-right btn btn-primary orange" onclick="uploadFileOne()">上传</button>
+			</div>
+
+		</div>
+
+	</form>
+
+	<hr/>
+
+</div>
+
+<div class="col-xs-12" id="formDataMore">
+
+	<h4>多文件上传</h4>
+
+	<form id="fileFormMore" method="post" enctype="multipart/form-data">
+
+		<!--样式太丑，不显示-->
+		<input type="file" name="fileMore" id="fileMore" style="display: none;" multiple="multiple">  <!--上传多个文件-->
+
+		<div class="row">
+			<div class="col-xs-4">
+				<div class="input-group">
+					<input type="text" class="form-control" id="fileName2" name="fileName2" placeholder="上传文件数量" readonly/>
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default no-border btn-sm" onclick="chooseFileMore()">
+							选择文件
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-1">
+				<!-- type="button" 阻止表单提交，默认情况下，type为submit-->
+				<button type="button" class="form-control pull-right btn btn-primary orange" onclick="uploadFileMore()">上传</button>
+			</div>
+		</div>
+	</form>
+
+	<hr/>
+
+</div>
+
+
+<div class="col-xs-12">
+
+	<h4>文件下载</h4>
+
+	<div class="row">
+		<div class="col-xs-1">
+			<!--下载不能异步请求-->
+			<a th:href="@{file/downloadFile}" class="form-control pull-right btn btn-primary orange">下载</a>
+		</div>
+
+	</div>
+	<hr/>
+
+</div>
+
+</html>
+
+<script type="text/javascript">
+
+
+    function uploadFileOne() {
+
+        var formData = new FormData($( "#fileFormOne" )[0]);
+
+        var obj = "test";   //测试内容
+
+        formData.append("obj",obj);
+
+        $.ajax({
+            type: "Post",
+//            url: "file/uploadFile",
+//            url: "roleInfo/uploadExcel",
+            url: "cityInfo/uploadCity",
+            data: formData,
+            dataType: "JSON",
+            async: false,
+            cache: false,  //上传文件无需缓存
+            contentType: false,  //必须
+            processData: false,  //用于对data参数进行序列化处理 这里必须false
+            success: function (data) {
+                if (data.success) {
+                    layer.msg(data.msg,{icon: 6});
+					window.location.reload();
+                }else {
+                    layer.msg(data.msg,{icon: 5});
+                }
+            }, error: function (data) {
+
+            }
+        });
+    }
+
+
+    function uploadFileMore() {
+
+        var formData = new FormData($("#fileFormMore")[0]);
+
+        var obj = "test";   //测试内容
+
+        formData.append("obj",obj);
+
+        $.ajax({
+            type: "Post",
+            url: "file/batchUploadFile",
+            data: formData,
+            dataType: "JSON",
+            async: false,
+            cache: false,  //上传文件无需缓存
+            contentType: false,  //必须
+            processData: false,  //用于对data参数进行序列化处理 这里必须false
+            success: function (data) {
+                if (data.success) {
+                    layer.msg(data.msg,{icon: 6});
+                    window.location.reload();
+                }else {
+                    layer.msg(data.msg,{icon: 5});
+                }
+            }, error: function (data) {
+
+            }
+        });
+    }
+
+
+    //点击选择文件
+    function chooseFileOne() {
+        $("#file").click();
+    }
+
+    function chooseFileMore() {
+        $("#fileMore").click();
+    }
+
+    /*单文件*/
+    $("#file").change(function () {
+//		$('#fileName1').val($(this).val());    //显示路径及文件名称
+
+        var file = this.files[0];
+        $('#fileName1').val(file.name);  //不显示路径，只显示文件名
+    });
+
+    /*多文件*/
+    $("#fileMore").change(function () {
+        var list = this.files;
+
+        $('#fileName2').val(list.length+"个文件");
+    });
+
+</script>

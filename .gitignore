@@ -21,3 +21,17 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# 忽略所有 .iml 结尾的文件
+*.iml
+
+# 忽略 .idea/ 目录下的所有文件，过滤整个 .idea 文件夹
+.idea/
+/.idea/
+
+target/*
+
+
+
+
+
