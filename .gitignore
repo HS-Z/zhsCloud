@@ -29,7 +29,9 @@ hs_err_pid*
 .idea/
 /.idea/
 
-target/*
+# 忽略所有target下的编译文件
+target/
+
 
 
 
