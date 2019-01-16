@@ -43,6 +43,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/register", "anon");  //跳转到注册页面
         filterChainDefinitionMap.put("/loginSystem", "anon");  //登陆
 
+        filterChainDefinitionMap.put("/actuator/**", "anon");  //springBoot-admin对basic服务的监控请求路径
+
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
 

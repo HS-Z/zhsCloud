@@ -38,8 +38,8 @@ public class UrlFilter implements Filter {
         String url = request.getRequestURI();
 
         boolean o=isNeedFilter(url);
-        System.out.println("请求地址为："+url);
-        System.out.println("是否被拦截："+o);
+//        System.out.println("请求地址为："+url);
+//        System.out.println("是否被拦截："+o);
 
 
 
