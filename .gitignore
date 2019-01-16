@@ -32,6 +32,8 @@ hs_err_pid*
 # 忽略所有target下的编译文件
 target/
 
+# 压缩的日志文件
+*.gz
 
 
 
