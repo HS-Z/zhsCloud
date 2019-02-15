@@ -25,7 +25,6 @@ import java.util.Date;
 import java.util.List;
 
 
-@RequestMapping(name = "roleInfoService")
 @Service
 public class RoleInfoService extends CommonService{
 
