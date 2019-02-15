@@ -20,6 +20,8 @@
         <module>zhs-provider</module>
         <module>zhs-ribbon</module>
         <module>zhs-feign</module>
+
+        <module>txlcn-tm</module>
     </modules>
 
     <parent>
