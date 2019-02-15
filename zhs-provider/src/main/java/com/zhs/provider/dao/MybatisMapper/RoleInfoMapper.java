@@ -3,11 +3,13 @@ package com.zhs.provider.dao.MybatisMapper;
 
 import com.zhs.common.jqGrid.JqGridQueryVo;
 import com.zhs.provider.model.RoleInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+@Mapper
 public interface RoleInfoMapper {
 
 

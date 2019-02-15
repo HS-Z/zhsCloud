@@ -1,5 +1,6 @@
 package com.zhs.provider.service;
 
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.Page;
 
 import com.zhs.common.jqGrid.JqGridQueryVo;
@@ -24,8 +25,8 @@ import java.util.Date;
 import java.util.List;
 
 
-@Transactional
 @RequestMapping(name = "roleInfoService")
+@Service
 public class RoleInfoService extends CommonService{
 
 
@@ -269,6 +270,21 @@ public class RoleInfoService extends CommonService{
         }
 
         return roleInfoList;
+
+    }
+
+
+
+    @LcnTransaction //分布式事务注解
+    @Transactional  //本地事务注解
+    public void txLcn(){
+        RoleInfo roleInfo = new RoleInfo();
+        roleInfo.setRoleCode("20000000032");
+        roleInfo.setRoleName("分布式事务测试provider");
+
+        System.out.println(8/0);
+
+        roleInfoRepository.save(roleInfo);
 
     }
 

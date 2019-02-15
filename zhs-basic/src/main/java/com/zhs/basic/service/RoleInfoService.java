@@ -1,5 +1,6 @@
 package com.zhs.basic.service;
 
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.Page;
 import com.zhs.basic.dao.JpaRepository.RoleInfoRepository;
 import com.zhs.basic.dao.MybatisMapper.RoleInfoMapper;
@@ -23,7 +24,6 @@ import java.util.Date;
 import java.util.List;
 
 
-@Transactional
 @Service
 public class RoleInfoService extends CommonService{
 
@@ -49,8 +49,6 @@ public class RoleInfoService extends CommonService{
         jqGridResponse = pageHelperService.pageHelper(jqGridResponse,pageHelper);
 
         jqGridResponse.setRows(list);
-
-        roleInterface.hello("ddd");
 
         return jqGridResponse;
 
@@ -272,6 +270,23 @@ public class RoleInfoService extends CommonService{
         }
 
         return roleInfoList;
+
+    }
+
+    /**
+     * 分布式事务测试
+     */
+
+    @LcnTransaction //分布式事务注解
+    @Transactional  //本地事务注解
+    public void txLcn(){
+        RoleInfo roleInfo = new RoleInfo();
+        roleInfo.setRoleCode("20000000032");
+        roleInfo.setRoleName("分布式事务测试");
+
+        roleInfoRepository.save(roleInfo);
+
+        roleInterface.txLcn();
 
     }
 

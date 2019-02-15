@@ -14,5 +14,8 @@ public interface RoleInterface {
     @RequestMapping("/hello")
     String hello(@RequestParam(value = "name") String name);
 
+    @RequestMapping("/txLcn")
+    void txLcn();
+
 
 }
