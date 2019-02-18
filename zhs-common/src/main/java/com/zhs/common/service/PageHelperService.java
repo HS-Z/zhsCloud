@@ -64,7 +64,7 @@ public class PageHelperService {
             jqGridResponse = new JqGridResponse();
         }
 
-        if (page.size() <= 0){
+        if (page.size() < 0){
             throw new RuntimeException("数据分页错误");
         }
 
