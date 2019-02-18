@@ -18,8 +18,6 @@
         <module>zhs-common</module>
         <module>zhs-basic</module>
         <module>zhs-provider</module>
-        <module>zhs-ribbon</module>
-        <module>zhs-feign</module>
 
         <module>txlcn-tm</module>
     </modules>
