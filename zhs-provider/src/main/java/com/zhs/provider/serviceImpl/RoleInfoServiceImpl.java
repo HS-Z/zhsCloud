@@ -274,7 +274,7 @@ public class RoleInfoServiceImpl extends CommonService implements RoleInfoServic
 
 
 
-    @LcnTransaction(propagation = DTXPropagation.SUPPORTS) //分布式事务注解
+    @LcnTransaction //分布式事务注解
     @Transactional  //本地事务注解
     public void txLcn(){
         RoleInfo roleInfo = new RoleInfo();
