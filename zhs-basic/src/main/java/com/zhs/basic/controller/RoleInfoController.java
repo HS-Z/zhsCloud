@@ -66,7 +66,7 @@ public class RoleInfoController {
 
             JqGridResponse jqGridResponse=roleInfoService.findRoleInfoList(jqGridQueryVo);
 
-//            roleInfoService.txLcn();
+            roleInfoService.txLcn();
 
             return jqGridResponse;
         } catch (Exception e) {

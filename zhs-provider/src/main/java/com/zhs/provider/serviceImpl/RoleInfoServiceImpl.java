@@ -1,5 +1,6 @@
 package com.zhs.provider.serviceImpl;
 
+import com.codingapi.txlcn.tc.annotation.DTXPropagation;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.Page;
 import com.zhs.common.jqGrid.JqGridQueryVo;
@@ -273,7 +274,7 @@ public class RoleInfoServiceImpl extends CommonService implements RoleInfoServic
 
 
 
-    @LcnTransaction //分布式事务注解
+    @LcnTransaction(propagation = DTXPropagation.SUPPORTS) //分布式事务注解
     @Transactional  //本地事务注解
     public void txLcn(){
         RoleInfo roleInfo = new RoleInfo();
