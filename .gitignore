@@ -35,6 +35,10 @@ target/
 # 压缩的日志文件
 *.gz
 
+# tx-lcn文件
+.txlcn/
+
+
 
 
 
