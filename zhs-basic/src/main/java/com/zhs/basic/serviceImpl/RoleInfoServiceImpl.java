@@ -17,8 +17,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -278,7 +278,7 @@ public class RoleInfoServiceImpl extends CommonService implements RoleInfoServic
      * 分布式事务测试
      */
 
-    @LcnTransaction //分布式事务注解
+//    @LcnTransaction //分布式事务注解
     @Transactional  //本地事务注解
     public void txLcn(){
         RoleInfo roleInfo = new RoleInfo();
@@ -287,7 +287,9 @@ public class RoleInfoServiceImpl extends CommonService implements RoleInfoServic
 
         roleInfoRepository.save(roleInfo);
 
-        roleInfoClient.txLcn();
+        int i=1/0;
+
+//        roleInfoClient.txLcn();
 
     }
 

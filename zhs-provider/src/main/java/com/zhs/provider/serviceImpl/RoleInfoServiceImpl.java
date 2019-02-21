@@ -1,6 +1,5 @@
 package com.zhs.provider.serviceImpl;
 
-import com.codingapi.txlcn.tc.annotation.DTXPropagation;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.Page;
 import com.zhs.common.jqGrid.JqGridQueryVo;
@@ -17,8 +16,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -281,7 +280,7 @@ public class RoleInfoServiceImpl extends CommonService implements RoleInfoServic
         roleInfo.setRoleCode("20000000032");
         roleInfo.setRoleName("分布式事务测试provider");
 
-        System.out.println(8/0);
+//        System.out.println(8/0);
 
         roleInfoRepository.save(roleInfo);
 
