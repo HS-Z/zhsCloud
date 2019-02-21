@@ -280,9 +280,9 @@ public class RoleInfoServiceImpl extends CommonService implements RoleInfoServic
         roleInfo.setRoleCode("20000000032");
         roleInfo.setRoleName("分布式事务测试provider");
 
-//        System.out.println(8/0);
-
         roleInfoRepository.save(roleInfo);
+
+//        int i=1/0;
 
     }
 
