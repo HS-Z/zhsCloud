@@ -13,6 +13,8 @@
 
     <modules>
         <module>zhs-eureka</module>
+        <module>zhs-config-server</module>
+        <module>zhs-config-client</module>
         <module>zhs-zuul</module>
         <module>zhs-admin</module>
         <module>zhs-common</module>
@@ -50,12 +52,6 @@
 
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <!--热启动-->
         <dependency>
