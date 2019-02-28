@@ -20,6 +20,7 @@ windows版本的redis下载地址：https://github.com/MicrosoftArchive/redis/re
 
 # zipkin使用指南
 windows版本：
-在当前项目的 项目所需 文件夹下获取 zipkin-server-2.11.12-exec.jar
-使用指令 java -jar zipkin.jar 启动
+在当前项目的“项目所需”文件夹下获取 zipkin-server-2.11.12-exec.jar
+将 zipkin-server-2.11.12-exec.jar 文件保存到本地，假设保存在c盘根目录
+在windows下使用WIN+R指令进入运行运行界面，输入cmd指令，然后再输入指令 java -jar zipkin-server-2.11.12-exec.jar 启动
 浏览器输入 http://127.0.0.1:9411/zipkin/ 进行查看
