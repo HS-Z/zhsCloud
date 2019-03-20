@@ -112,7 +112,6 @@
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
 		</dependency>
 
-
         <!--tx-lcn-->
         <dependency>
             <groupId>com.codingapi.txlcn</groupId>
@@ -124,6 +123,12 @@
             <groupId>com.codingapi.txlcn</groupId>
             <artifactId>txlcn-txmsg-netty</artifactId>
             <version>5.0.1.RELEASE</version>
+        </dependency>
+
+        <!--RabbitMQ-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
     </dependencies>
