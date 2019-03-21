@@ -1,10 +1,7 @@
 package com.zhs.common.rabbitMQ;
 
 import com.zhs.common.constant.RabbitMQ;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +24,98 @@ public class RabbitConfig {
     private SimpleRabbitListenerContainerFactoryConfigurer configure;
 
 
-    @Bean(name = "helloQueue")
-    public Queue helloQueue(){
-        return new Queue(RabbitMQ.TEST);
+    /*
+     * ***********************************************************************
+     * 队列 Queue
+     * ************************************************************************
+     */
+
+
+    @Bean
+    public Queue queueMessage(){
+        return new Queue(RabbitMQ.QUEUE_MESSAGE);
     }
 
 
-    @Bean(name = "emailQueue")
-    public Queue emailQueue(){
-        return new Queue(RabbitMQ.EMAIL);
+    @Bean
+    public Queue queueMessages(){
+        return new Queue(RabbitMQ.QUEUE_MESSAGES);
     }
+
+
+    /**
+     * Fanout 队列测试
+     * @return
+     */
+    @Bean
+    public Queue AMessage() {
+        return new Queue("fanout.A");
+    }
+
+    @Bean
+    public Queue BMessage() {
+        return new Queue("fanout.B");
+    }
+
+    @Bean
+    public Queue CMessage() {
+        return new Queue("fanout.C");
+    }
+
+
+
+    /*
+     * ***********************************************************************
+     * 交换机 Exchange
+     * ************************************************************************
+     */
+
+
+    /**
+     * topic
+     * 最常用
+     * @return
+     */
+    @Bean
+    public TopicExchange registerTopicExchange() {
+        return new TopicExchange(RabbitMQ.TOPIC_EXCHANGE);
+    }
+
+    @Bean
+    public Binding registerBinding(Queue queueMessage, TopicExchange topicExchange) {
+        return BindingBuilder.bind(queueMessage).to(topicExchange).with("queue.message");
+    }
+
+    @Bean
+    public Binding registerBindings(Queue queueMessages,TopicExchange topicExchange) {
+        return BindingBuilder.bind(queueMessages).to(topicExchange).with("queue.#");
+    }
+
+
+    /**
+     * 广播模式、订阅模式
+     * @return
+     */
+    @Bean
+    FanoutExchange fanoutExchange() {
+        return new FanoutExchange(RabbitMQ.FANOUT_EXCHANGE);
+    }
+
+    @Bean
+    Binding bindingExchangeA(Queue AMessage,FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(AMessage).to(fanoutExchange);
+    }
+
+    @Bean
+    Binding bindingExchangeB(Queue BMessage, FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(BMessage).to(fanoutExchange);
+    }
+
+    @Bean
+    Binding bindingExchangeC(Queue CMessage, FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(CMessage).to(fanoutExchange);
+    }
+
 
 
     /**
@@ -53,21 +132,7 @@ public class RabbitConfig {
     }
 
 
-    @Bean
-    public TopicExchange registerTopicExchange() {
-        return new TopicExchange("exchange");
-    }
 
-    @Bean
-    public Binding registerBinding(Queue helloQueue, TopicExchange topicExchange) {
-        return BindingBuilder.bind(helloQueue).to(topicExchange).with("zfjk_queue.#");
-    }
-
-
-    @Bean
-    public Binding registerBindings(Queue emailQueue,TopicExchange topicExchange) {
-        return BindingBuilder.bind(emailQueue).to(topicExchange).with("zfjk_queues.#");
-    }
 
 
 }

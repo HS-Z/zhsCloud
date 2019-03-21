@@ -6,28 +6,45 @@ package com.zhs.common.constant;
 public class RabbitMQ {
 
 
+    /*
+     * ************************************************************************
+     * 交换机 Exchange
+     * ************************************************************************
+     */
+
+    /**
+     * 根据key全文匹配
+     */
+    public static final String DIRECT_EXCHANGE = "direct_exchange";
+
+    /**
+     * 按规则转发消息
+     */
+    public static final String TOPIC_EXCHANGE = "topic_exchange";
+
+
+    /**
+     * 消息广播的模式，不管路由键或者是路由模式，会把消息发给绑定给它的全部队列，如果配置了routing_key会被忽略。
+     */
+    public static final String FANOUT_EXCHANGE = "fanout_exchange";
+
+
+
+    /*
+     * ************************************************************************
+     * 队列 Queue
+     * ************************************************************************
+     */
+
+
     /**
      * 测试内容
      */
-    public static final String TEST = "test";
+    public static final String QUEUE_MESSAGE = "queue.message";
 
 
-    /**
-     * 邮件
-     */
-    public static final String EMAIL = "email";
+    public static final String QUEUE_MESSAGES = "queue.messages";
 
-
-    /**
-     * 短信
-     */
-    public static final String SMS = "sms";
-
-
-    /**
-     * 消息
-     */
-    public static final String MESSAGE = "message";
 
 
     /*
