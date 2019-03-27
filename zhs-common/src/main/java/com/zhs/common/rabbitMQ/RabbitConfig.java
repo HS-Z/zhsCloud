@@ -26,94 +26,157 @@ public class RabbitConfig {
 
     /*
      * ***********************************************************************
-     * 队列 Queue
+     * Direct 交换机队列
      * ************************************************************************
      */
 
-
     @Bean
-    public Queue queueMessage(){
-        return new Queue(RabbitMQ.QUEUE_MESSAGE);
-    }
-
-
-    @Bean
-    public Queue queueMessages(){
-        return new Queue(RabbitMQ.QUEUE_MESSAGES);
-    }
-
-
-    /**
-     * Fanout 队列测试
-     * @return
-     */
-    @Bean
-    public Queue AMessage() {
-        return new Queue("fanout.A");
+    public Queue directQueueA(){
+        return new Queue(RabbitMQ.DIRECT_QUEUE_A);
     }
 
     @Bean
-    public Queue BMessage() {
-        return new Queue("fanout.B");
+    public Queue directQueueB(){
+        return new Queue(RabbitMQ.DIRECT_QUEUE_B);
     }
 
     @Bean
-    public Queue CMessage() {
-        return new Queue("fanout.C");
+    public Queue directQueueC(){
+        return new Queue(RabbitMQ.DIRECT_QUEUE_C);
     }
 
 
 
     /*
      * ***********************************************************************
-     * 交换机 Exchange
+     * Topic 交换机队列
      * ************************************************************************
      */
 
-
-    /**
-     * topic
-     * 最常用
-     * @return
-     */
     @Bean
-    public TopicExchange registerTopicExchange() {
+    public Queue topicQueueA(){
+        return new Queue(RabbitMQ.TOPIC_QUEUE_A);
+    }
+
+    @Bean
+    public Queue topicQueueB(){
+        return new Queue(RabbitMQ.TOPIC_QUEUE_B);
+    }
+
+    @Bean
+    public Queue topicQueueC(){
+        return new Queue(RabbitMQ.TOPIC_QUEUE_C);
+    }
+
+
+    /*
+     * ***********************************************************************
+     * Fanout 交换机队列
+     * ************************************************************************
+     */
+
+    @Bean
+    public Queue fanoutQueueA(){
+        return new Queue(RabbitMQ.FANOUT_QUEUE_A);
+    }
+
+    @Bean
+    public Queue fanoutQueueB(){
+        return new Queue(RabbitMQ.FANOUT_QUEUE_B);
+    }
+
+    @Bean
+    public Queue fanoutQueueC(){
+        return new Queue(RabbitMQ.FANOUT_QUEUE_C);
+    }
+
+
+
+    /*
+     * ***********************************************************************
+     * Direct 交换机
+     * ************************************************************************
+     */
+
+    @Bean
+    public DirectExchange directExchange() {
+        return new DirectExchange(RabbitMQ.DIRECT_EXCHANGE);
+    }
+
+    @Bean
+    public Binding bindingDirectExchangeA(Queue directQueueA, DirectExchange directExchange) {
+        return BindingBuilder.bind(directQueueA).to(directExchange).with(RabbitMQ.DIRECT_QUEUE_A);
+    }
+
+    @Bean
+    public Binding bindingDirectExchangeB(Queue directQueueB, DirectExchange directExchange) {
+        return BindingBuilder.bind(directQueueB).to(directExchange).with(RabbitMQ.DIRECT_QUEUE_B);
+    }
+
+    @Bean
+    public Binding bindingDirectExchangeC(Queue directQueueC, DirectExchange directExchange) {
+            return BindingBuilder.bind(directQueueC).to(directExchange).with(RabbitMQ.DIRECT_QUEUE_C);
+    }
+
+
+    /*
+     * ***********************************************************************
+     * Topic 交换机（最常用）
+     * ************************************************************************
+     */
+
+    @Bean
+    public TopicExchange topicExchange() {
         return new TopicExchange(RabbitMQ.TOPIC_EXCHANGE);
     }
 
     @Bean
-    public Binding registerBinding(Queue queueMessage, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queueMessage).to(topicExchange).with("queue.message");
+    public Binding bindingTopicExchangeA(Queue topicQueueA, TopicExchange topicExchange) {
+        return BindingBuilder.bind(topicQueueA).to(topicExchange).with(RabbitMQ.TOPIC_QUEUE_A);
     }
 
     @Bean
-    public Binding registerBindings(Queue queueMessages,TopicExchange topicExchange) {
-        return BindingBuilder.bind(queueMessages).to(topicExchange).with("queue.#");
+    public Binding bindingTopicExchangeB(Queue topicQueueB,TopicExchange topicExchange) {
+        return BindingBuilder.bind(topicQueueB).to(topicExchange).with(RabbitMQ.TOPIC_QUEUE_B);
+    }
+
+    @Bean
+    public Binding bindingTopicExchangeC(Queue topicQueueC,TopicExchange topicExchange) {
+        return BindingBuilder.bind(topicQueueC).to(topicExchange).with(RabbitMQ.TOPIC_QUEUE_C);
     }
 
 
-    /**
-     * 广播模式、订阅模式
-     * @return
+    @Bean
+    public Binding bindingTopicExchangeD(Queue topicQueueC,TopicExchange topicExchange) {
+        return BindingBuilder.bind(topicQueueC).to(topicExchange).with("topic.queue.#");  //*表示一个词，#表示零个或多个词
+    }
+
+
+
+    /*
+     * ***********************************************************************
+     * Fanout 交换机（广播模式、订阅模式）
+     * ************************************************************************
      */
+
     @Bean
-    FanoutExchange fanoutExchange() {
+    public FanoutExchange fanoutExchange() {
         return new FanoutExchange(RabbitMQ.FANOUT_EXCHANGE);
     }
 
     @Bean
-    Binding bindingExchangeA(Queue AMessage,FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(AMessage).to(fanoutExchange);
+    public Binding bindingFanoutExchangeA(Queue fanoutQueueA, FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(fanoutQueueA).to(fanoutExchange);
     }
 
     @Bean
-    Binding bindingExchangeB(Queue BMessage, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(BMessage).to(fanoutExchange);
+    public Binding bindingFanoutExchangeB(Queue fanoutQueueB, FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(fanoutQueueB).to(fanoutExchange);
     }
 
     @Bean
-    Binding bindingExchangeC(Queue CMessage, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(CMessage).to(fanoutExchange);
+    public Binding bindingFanoutExchangeC(Queue fanoutQueueC, FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(fanoutQueueC).to(fanoutExchange);
     }
 
 
@@ -130,9 +193,6 @@ public class RabbitConfig {
         configure.configure(factory, connectionFactory);
         return factory;
     }
-
-
-
 
 
 }

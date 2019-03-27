@@ -11,9 +11,36 @@ import org.springframework.stereotype.Component;
 public class RabbitReceiver {
 
 
-    @RabbitListener(queues = RabbitMQ.TEST)
-    public void hello(Object o){
-        System.out.println("消息測試");
+    @RabbitListener(queues = RabbitMQ.DIRECT_QUEUE_A)
+    public void directQueueA(Object o){
+        System.out.println("RabbitReceiver ----> directQueueA ----> "+o.toString());
     }
+
+
+    @RabbitListener(queues = RabbitMQ.DIRECT_QUEUE_B)
+    public void directQueueB(Object o){
+        System.out.println("RabbitReceiver ----> directQueueB ----> "+o.toString());
+    }
+
+
+    @RabbitListener(queues = RabbitMQ.TOPIC_QUEUE_A)
+    public void topicQueueA(Object o){
+        System.out.println("RabbitReceiver ----> topicQueueA ----> "+o.toString());
+    }
+
+
+    @RabbitListener(queues = RabbitMQ.TOPIC_QUEUE_B)
+    public void topicQueueB(Object o){
+        System.out.println("RabbitReceiver ----> topicQueueB ----> "+o.toString());
+    }
+
+
+    @RabbitListener(queues = RabbitMQ.TOPIC_QUEUE_C)
+    public void topicQueueC(Object o){
+        System.out.println("RabbitReceiver ----> topicQueueC ----> "+o.toString());
+    }
+
+
+
 
 }

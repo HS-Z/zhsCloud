@@ -20,7 +20,12 @@ public class RabbitSend {
     public void send(String a, Object o){
 
 //        this.amqpTemplate.convertAndSend(a,o);
-        this.amqpTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE,RabbitMQ.QUEUE_MESSAGE,"hahhhahhahahahahha");  //
+        this.amqpTemplate.convertAndSend(RabbitMQ.DIRECT_EXCHANGE,RabbitMQ.DIRECT_QUEUE_A,"1111");
+        this.amqpTemplate.convertAndSend(RabbitMQ.DIRECT_EXCHANGE,RabbitMQ.DIRECT_QUEUE_B,"2222");
+        this.amqpTemplate.convertAndSend(RabbitMQ.DIRECT_EXCHANGE,RabbitMQ.DIRECT_QUEUE_C,"3333");
+        this.amqpTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE,RabbitMQ.TOPIC_QUEUE_A,"4444");
+        this.amqpTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE,RabbitMQ.TOPIC_QUEUE_B,"5555");
+        this.amqpTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE,RabbitMQ.TOPIC_QUEUE_C,"6666");
         this.amqpTemplate.convertAndSend(RabbitMQ.FANOUT_EXCHANGE,"","Fanout");  //广播模式
 
     }

@@ -40,10 +40,27 @@ public class RabbitMQ {
     /**
      * 测试内容
      */
-    public static final String QUEUE_MESSAGE = "queue.message";
+    public static final String DIRECT_QUEUE_A = "direct.queue.a";
+
+    public static final String DIRECT_QUEUE_B = "direct.queue.b";
+
+    public static final String DIRECT_QUEUE_C = "direct.queue.c";
 
 
-    public static final String QUEUE_MESSAGES = "queue.messages";
+
+    public static final String TOPIC_QUEUE_A = "topic.queue.a";
+
+    public static final String TOPIC_QUEUE_B = "topic.queue.b";
+
+    public static final String TOPIC_QUEUE_C = "topic.queue.c";
+
+
+
+    public static final String FANOUT_QUEUE_A = "fanout.queue.a";
+
+    public static final String FANOUT_QUEUE_B = "fanout.queue.b";
+
+    public static final String FANOUT_QUEUE_C = "fanout.queue.c";
 
 
 
