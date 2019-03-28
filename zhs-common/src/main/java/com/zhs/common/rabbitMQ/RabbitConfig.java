@@ -32,17 +32,17 @@ public class RabbitConfig {
 
     @Bean
     public Queue directQueueA(){
-        return new Queue(RabbitMQ.DIRECT_QUEUE_A);
+        return new Queue(RabbitMQ.DIRECT_QUEUE_A,true);   //开启队列持久化（其实默认已开启）
     }
 
     @Bean
     public Queue directQueueB(){
-        return new Queue(RabbitMQ.DIRECT_QUEUE_B);
+        return new Queue(RabbitMQ.DIRECT_QUEUE_B,true);   //开启队列持久化（其实默认已开启）
     }
 
     @Bean
     public Queue directQueueC(){
-        return new Queue(RabbitMQ.DIRECT_QUEUE_C);
+        return new Queue(RabbitMQ.DIRECT_QUEUE_C,true);   //开启队列持久化（其实默认已开启）
     }
 
 
@@ -55,39 +55,40 @@ public class RabbitConfig {
 
     @Bean
     public Queue topicQueueA(){
-        return new Queue(RabbitMQ.TOPIC_QUEUE_A);
+        return new Queue(RabbitMQ.TOPIC_QUEUE_A,true);   //开启队列持久化（其实默认已开启）
     }
 
     @Bean
     public Queue topicQueueB(){
-        return new Queue(RabbitMQ.TOPIC_QUEUE_B);
+        return new Queue(RabbitMQ.TOPIC_QUEUE_B,true);   //开启队列持久化（其实默认已开启）
     }
 
     @Bean
     public Queue topicQueueC(){
-        return new Queue(RabbitMQ.TOPIC_QUEUE_C);
+        return new Queue(RabbitMQ.TOPIC_QUEUE_C,true);   //开启队列持久化（其实默认已开启）
     }
 
 
     /*
      * ***********************************************************************
      * Fanout 交换机队列
+     * 默认已开启持久化
      * ************************************************************************
      */
 
     @Bean
     public Queue fanoutQueueA(){
-        return new Queue(RabbitMQ.FANOUT_QUEUE_A);
+        return new Queue(RabbitMQ.FANOUT_QUEUE_A,true);   //开启队列持久化（其实默认已开启）
     }
 
     @Bean
     public Queue fanoutQueueB(){
-        return new Queue(RabbitMQ.FANOUT_QUEUE_B);
+        return new Queue(RabbitMQ.FANOUT_QUEUE_B,true);   //开启队列持久化（其实默认已开启）
     }
 
     @Bean
     public Queue fanoutQueueC(){
-        return new Queue(RabbitMQ.FANOUT_QUEUE_C);
+        return new Queue(RabbitMQ.FANOUT_QUEUE_C,true);   //开启队列持久化（其实默认已开启）
     }
 
 
@@ -100,7 +101,7 @@ public class RabbitConfig {
 
     @Bean
     public DirectExchange directExchange() {
-        return new DirectExchange(RabbitMQ.DIRECT_EXCHANGE);
+        return new DirectExchange(RabbitMQ.DIRECT_EXCHANGE,true,false);   //开启交换机持久化（其实默认已开启）
     }
 
     @Bean
@@ -127,7 +128,7 @@ public class RabbitConfig {
 
     @Bean
     public TopicExchange topicExchange() {
-        return new TopicExchange(RabbitMQ.TOPIC_EXCHANGE);
+        return new TopicExchange(RabbitMQ.TOPIC_EXCHANGE,true,false);  //开启交换机持久化（其实默认已开启）
     }
 
     @Bean
@@ -161,7 +162,7 @@ public class RabbitConfig {
 
     @Bean
     public FanoutExchange fanoutExchange() {
-        return new FanoutExchange(RabbitMQ.FANOUT_EXCHANGE);
+        return new FanoutExchange(RabbitMQ.FANOUT_EXCHANGE,true,false);  //开启交换机持久化（其实默认已开启）
     }
 
     @Bean
@@ -185,6 +186,7 @@ public class RabbitConfig {
      * 并发消费配置
      * @return
      */
+
     @Bean("pointTaskContainerFactory")
     public SimpleRabbitListenerContainerFactory pointTaskContainerFactory() {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
