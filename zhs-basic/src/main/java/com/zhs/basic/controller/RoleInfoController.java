@@ -6,6 +6,7 @@ import com.zhs.basic.service.RoleInfoService;
 import com.zhs.common.jqGrid.JqGridQueryVo;
 import com.zhs.common.jqGrid.JqGridRequest;
 import com.zhs.common.jqGrid.JqGridResponse;
+import com.zhs.common.rabbitMQ.RabbitSend;
 import com.zhs.common.utils.CommonUtils;
 import com.zhs.common.utils.PoiUtils;
 import com.zhs.common.vo.Json;
@@ -40,6 +41,8 @@ public class RoleInfoController {
     private PoiUtils poiUtils;
     @Autowired
     private CommonUtils commonUtils;
+    @Autowired
+    private RabbitSend rabbitSend;
 
     /**
      * 跳转到角色列表
@@ -48,6 +51,7 @@ public class RoleInfoController {
      */
     @RequestMapping(value = "toRoleInfoList", method = {RequestMethod.GET, RequestMethod.POST})
     public String toRoleInfoList(Model model){
+//        rabbitSend.send(null,null);
         return "systemManage/roleInfoList";
     }
 
@@ -66,7 +70,7 @@ public class RoleInfoController {
 
             JqGridResponse jqGridResponse=roleInfoService.findRoleInfoList(jqGridQueryVo);
 
-            roleInfoService.txLcn();
+//            roleInfoService.txLcn();
 
             return jqGridResponse;
         } catch (Exception e) {
