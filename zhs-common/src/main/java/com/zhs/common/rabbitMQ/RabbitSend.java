@@ -59,7 +59,7 @@ public class RabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplat
 
 
     /**
-     * 回调
+     * 用于监听Server端给我们返回的确认请求,消息到了exchange，ack 就返回true
      * @param correlationData
      * @param b
      * @param s
@@ -74,8 +74,13 @@ public class RabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplat
     }
 
 
+    /**
+     * 监听对不可达的消息进行后续处理;
+     * 不可达消息：指定的路由key路由不到。
+     */
     @Override
     public void returnedMessage(Message message, int i, String s, String s1, String s2) {
         System.out.println(message.getMessageProperties() + " 发送失败");
     }
+
 }
