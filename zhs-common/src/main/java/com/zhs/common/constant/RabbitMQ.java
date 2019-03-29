@@ -63,23 +63,4 @@ public class RabbitMQ {
     public static final String FANOUT_QUEUE_C = "fanout.queue.c";
 
 
-
-    /*
-     * ************************************************************************
-     * ************************************************************************
-     */
-
-
-    /**
-     * 消费者数量，默认10
-     */
-    public static final int DEFAULT_CONCURRENT = 10;
-
-
-    /**
-     * 每个消费者获取最大投递数量 默认50
-     */
-    public static final int DEFAULT_PREFETCH_COUNT = 50;
-
-
 }

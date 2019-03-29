@@ -2,7 +2,6 @@ package com.zhs.common.rabbitMQ;
 
 import com.zhs.common.constant.RabbitMQ;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
@@ -178,22 +177,6 @@ public class RabbitConfig {
     @Bean
     public Binding bindingFanoutExchangeC(Queue fanoutQueueC, FanoutExchange fanoutExchange) {
         return BindingBuilder.bind(fanoutQueueC).to(fanoutExchange);
-    }
-
-
-
-    /**
-     * 并发消费配置
-     * @return
-     */
-
-    @Bean("pointTaskContainerFactory")
-    public SimpleRabbitListenerContainerFactory pointTaskContainerFactory() {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setPrefetchCount(RabbitMQ.DEFAULT_CONCURRENT);
-        factory.setConcurrentConsumers(RabbitMQ.DEFAULT_PREFETCH_COUNT);
-        configure.configure(factory, connectionFactory);
-        return factory;
     }
 
 
