@@ -277,7 +277,6 @@ public class RoleInfoServiceImpl extends CommonService implements RoleInfoServic
     /**
      * 分布式事务测试
      */
-
     @LcnTransaction //分布式事务注解
     @Transactional  //本地事务注解
     public void txLcn(){
@@ -289,7 +288,7 @@ public class RoleInfoServiceImpl extends CommonService implements RoleInfoServic
 
         roleInfoClient.txLcn();
 
-        int i=1/0;
+//        int i=1/0;
 
     }
 
