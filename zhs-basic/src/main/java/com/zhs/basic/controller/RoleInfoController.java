@@ -2,11 +2,11 @@ package com.zhs.basic.controller;
 
 
 import com.zhs.basic.model.RoleInfo;
+import com.zhs.basic.rabbitMQ.RabbitSend;
 import com.zhs.basic.service.RoleInfoService;
 import com.zhs.common.jqGrid.JqGridQueryVo;
 import com.zhs.common.jqGrid.JqGridRequest;
 import com.zhs.common.jqGrid.JqGridResponse;
-import com.zhs.common.rabbitMQ.RabbitSend;
 import com.zhs.common.utils.CommonUtils;
 import com.zhs.common.utils.PoiUtils;
 import com.zhs.common.vo.Json;
@@ -51,7 +51,7 @@ public class RoleInfoController {
      */
     @RequestMapping(value = "toRoleInfoList", method = {RequestMethod.GET, RequestMethod.POST})
     public String toRoleInfoList(Model model){
-//        rabbitSend.send(null,null);
+        rabbitSend.send(null,null);
         return "systemManage/roleInfoList";
     }
 
@@ -70,7 +70,7 @@ public class RoleInfoController {
 
             JqGridResponse jqGridResponse=roleInfoService.findRoleInfoList(jqGridQueryVo);
 
-            roleInfoService.txLcn();
+//            roleInfoService.txLcn();
             return jqGridResponse;
         } catch (Exception e) {
             logger.error(e.getMessage());

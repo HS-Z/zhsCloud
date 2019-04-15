@@ -2,9 +2,6 @@ package com.zhs.common.rabbitMQ;
 
 import com.zhs.common.constant.RabbitMQ;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,13 +11,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RabbitConfig {
-
-
-    @Autowired
-    private ConnectionFactory connectionFactory;
-
-    @Autowired
-    private SimpleRabbitListenerContainerFactoryConfigurer configure;
 
 
     /*
@@ -71,7 +61,6 @@ public class RabbitConfig {
     /*
      * ***********************************************************************
      * Fanout 交换机队列
-     * 默认已开启持久化
      * ************************************************************************
      */
 
