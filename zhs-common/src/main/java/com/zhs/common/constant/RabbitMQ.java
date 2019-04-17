@@ -44,15 +44,11 @@ public class RabbitMQ {
 
     public static final String DIRECT_QUEUE_B = "direct.queue.b";
 
-    public static final String DIRECT_QUEUE_C = "direct.queue.c";
-
 
 
     public static final String TOPIC_QUEUE_A = "topic.queue.a";
 
     public static final String TOPIC_QUEUE_B = "topic.queue.b";
-
-    public static final String TOPIC_QUEUE_C = "topic.queue.c";
 
 
 
@@ -60,7 +56,23 @@ public class RabbitMQ {
 
     public static final String FANOUT_QUEUE_B = "fanout.queue.b";
 
-    public static final String FANOUT_QUEUE_C = "fanout.queue.c";
 
+    /**
+     * 定义死信队列相关信息
+     */
+    public final static String DEAD_EXCHANGE = "dead_exchange";
+
+    public final static String DEAD_QUEUE = "dead_queue";
+
+    public final static String DEAD_ROUTING_KEY = "dead_routing_key";
+
+    /**
+     * 死信队列 交换机标识符
+     */
+    public static final String DEAD_LETTER_QUEUE_KEY = "x-dead-letter-exchange";
+    /**
+     * 死信队列交换机绑定键标识符
+     */
+    public static final String DEAD_LETTER_ROUTING_KEY = "x-dead-letter-routing-key";
 
 }

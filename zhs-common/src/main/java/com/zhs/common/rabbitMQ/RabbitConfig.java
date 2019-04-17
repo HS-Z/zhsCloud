@@ -2,8 +2,13 @@ package com.zhs.common.rabbitMQ;
 
 import com.zhs.common.constant.RabbitMQ;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -29,11 +34,6 @@ public class RabbitConfig {
         return new Queue(RabbitMQ.DIRECT_QUEUE_B,true);   //开启队列持久化（其实默认已开启）
     }
 
-    @Bean
-    public Queue directQueueC(){
-        return new Queue(RabbitMQ.DIRECT_QUEUE_C,true);   //开启队列持久化（其实默认已开启）
-    }
-
 
 
     /*
@@ -52,10 +52,6 @@ public class RabbitConfig {
         return new Queue(RabbitMQ.TOPIC_QUEUE_B,true);   //开启队列持久化（其实默认已开启）
     }
 
-    @Bean
-    public Queue topicQueueC(){
-        return new Queue(RabbitMQ.TOPIC_QUEUE_C,true);   //开启队列持久化（其实默认已开启）
-    }
 
 
     /*
@@ -72,11 +68,6 @@ public class RabbitConfig {
     @Bean
     public Queue fanoutQueueB(){
         return new Queue(RabbitMQ.FANOUT_QUEUE_B,true);   //开启队列持久化（其实默认已开启）
-    }
-
-    @Bean
-    public Queue fanoutQueueC(){
-        return new Queue(RabbitMQ.FANOUT_QUEUE_C,true);   //开启队列持久化（其实默认已开启）
     }
 
 
@@ -102,10 +93,6 @@ public class RabbitConfig {
         return BindingBuilder.bind(directQueueB).to(directExchange).with(RabbitMQ.DIRECT_QUEUE_B);
     }
 
-    @Bean
-    public Binding bindingDirectExchangeC(Queue directQueueC, DirectExchange directExchange) {
-            return BindingBuilder.bind(directQueueC).to(directExchange).with(RabbitMQ.DIRECT_QUEUE_C);
-    }
 
 
     /*
@@ -124,20 +111,10 @@ public class RabbitConfig {
         return BindingBuilder.bind(topicQueueA).to(topicExchange).with(RabbitMQ.TOPIC_QUEUE_A);
     }
 
+
     @Bean
     public Binding bindingTopicExchangeB(Queue topicQueueB,TopicExchange topicExchange) {
-        return BindingBuilder.bind(topicQueueB).to(topicExchange).with(RabbitMQ.TOPIC_QUEUE_B);
-    }
-
-    @Bean
-    public Binding bindingTopicExchangeC(Queue topicQueueC,TopicExchange topicExchange) {
-        return BindingBuilder.bind(topicQueueC).to(topicExchange).with(RabbitMQ.TOPIC_QUEUE_C);
-    }
-
-
-    @Bean
-    public Binding bindingTopicExchangeD(Queue topicQueueC,TopicExchange topicExchange) {
-        return BindingBuilder.bind(topicQueueC).to(topicExchange).with("topic.queue.#");  //*表示一个词，#表示零个或多个词
+        return BindingBuilder.bind(topicQueueB).to(topicExchange).with("topic.queue.#");  //*表示一个词，#表示零个或多个词
     }
 
 
@@ -163,10 +140,19 @@ public class RabbitConfig {
         return BindingBuilder.bind(fanoutQueueB).to(fanoutExchange);
     }
 
-    @Bean
-    public Binding bindingFanoutExchangeC(Queue fanoutQueueC, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(fanoutQueueC).to(fanoutExchange);
-    }
 
+
+    /**
+     * 解决两次ack的问题
+     * @param connectionFactory
+     * @return
+     */
+    @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        return factory;
+    }
 
 }

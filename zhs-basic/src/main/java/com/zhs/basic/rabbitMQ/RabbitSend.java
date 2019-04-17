@@ -2,6 +2,7 @@ package com.zhs.basic.rabbitMQ;
 
 import com.zhs.common.constant.RabbitMQ;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.UUID;
 
 /**
  * Created by Zhang on 2019/3/20.
@@ -32,21 +32,13 @@ public class RabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplat
 
     public void send(String a, Object o){
 
-        CorrelationData correlationData1 = new CorrelationData(UUID.randomUUID().toString());
-        CorrelationData correlationData2 = new CorrelationData(UUID.randomUUID().toString());
-        CorrelationData correlationData3 = new CorrelationData(UUID.randomUUID().toString());
-        CorrelationData correlationData4 = new CorrelationData(UUID.randomUUID().toString());
-        CorrelationData correlationData5 = new CorrelationData(UUID.randomUUID().toString());
-        CorrelationData correlationData6 = new CorrelationData(UUID.randomUUID().toString());
-        CorrelationData correlationData7 = new CorrelationData(UUID.randomUUID().toString());
+        MessageProperties messageProperties=new MessageProperties();
 
-//        System.out.println("correlationData1---->"+ correlationData1);
-//        System.out.println("correlationData2---->"+ correlationData2);
-//        System.out.println("correlationData3---->"+ correlationData3);
-//        System.out.println("correlationData4---->"+ correlationData4);
-//        System.out.println("correlationData5---->"+ correlationData5);
-//        System.out.println("correlationData6---->"+ correlationData6);
-//        System.out.println("correlationData7---->"+ correlationData7);
+        messageProperties.setContentType(MessageProperties.DEFAULT_CONTENT_TYPE);
+        messageProperties.setDeliveryMode(MessageProperties.DEFAULT_DELIVERY_MODE);//持久化设置
+//        messageProperties.setExpiration("2019-12-15 23:23:23");//设置到期时间
+
+        Message message = new Message("hello".getBytes(),messageProperties);
 
 //        this.rabbitTemplate.convertAndSend(a,o);
 //        this.rabbitTemplate.convertAndSend(RabbitMQ.DIRECT_EXCHANGE,RabbitMQ.DIRECT_QUEUE_A,"DIRECT_QUEUE_A------1111",correlationData1);
@@ -59,10 +51,17 @@ public class RabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplat
 //        this.rabbitTemplate.convertAndSend(RabbitMQ.FANOUT_EXCHANGE,"","Fanout--------77777",correlationData7);  //广播模式
 
 //        this.rabbitTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE,RabbitMQ.TOPIC_QUEUE_A,"TOPIC_QUEUE_A------4444",correlationData4);
-        this.rabbitTemplate.convertAndSend("aaaaa",RabbitMQ.TOPIC_QUEUE_A,"dfdferresaaaa",correlationData3);
-        System.out.println("correlationData3-------->"+correlationData3);
-        System.out.println("correlationData4-------->"+correlationData4);
-        this.rabbitTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE,"uyyydf","yyudfdfdfdf",correlationData4);
+//        this.rabbitTemplate.convertAndSend("aaaaa",RabbitMQ.TOPIC_QUEUE_A,"dfdferresaaaa",correlationData3);
+//        this.rabbitTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE,"uyyydf","yyudfdfdfdf",correlationData4);
+
+        //exchange，queue 都正确，confirm 被回调，ack=true
+//        this.rabbitTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE, RabbitMQ.TOPIC_QUEUE_A, message);
+        //exchange错误，queue 正确，confirm 被回调，ack=false，cause=channel error;
+//        this.rabbitTemplate.convertAndSend("kitzhs", RabbitMQ.TOPIC_QUEUE_A, message);
+        //exchange正确，queue 错误，confirm 被回调，ack=true；returnedMessage 被回调，replyText=NO_ROUTE
+//        this.rabbitTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE, "kitzhs", message);
+        //exchange，queue 都错误，confirm 被回调，ack=false，cause=channel error;
+        this.rabbitTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE, RabbitMQ.TOPIC_QUEUE_A, message);
 
 
     }
@@ -79,9 +78,9 @@ public class RabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplat
     public void confirm(@Nullable CorrelationData correlationData, boolean ack, @Nullable String cause) {
         System.out.println("confirm模式---" + correlationData);
         if (ack) {
-            System.out.println("路由到交换机成功:" + correlationData);
+            System.out.println("路由到交换机成功:" + correlationData + "----------ack:" + ack + "-----------cause:"+cause);
         } else {
-            System.out.println("路由到交换机失败:" + correlationData);
+            System.out.println("路由到交换机失败:" + correlationData + "----------ack:" + ack + "-----------cause:"+cause);
         }
     }
 
