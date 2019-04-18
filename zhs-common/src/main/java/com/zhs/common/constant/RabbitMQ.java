@@ -24,7 +24,7 @@ public class RabbitMQ {
 
 
     /**
-     * 消息广播的模式，不管路由键或者是路由模式，会把消息发给绑定给它的全部队列，如果配置了routing_key会被忽略。
+     * 消息广播的模式，不管路由键或者是路由模式，会把消息发给绑定给它的全部队列，如果配置了routingKey会被忽略。
      */
     public static final String FANOUT_EXCHANGE = "fanout_exchange";
 
@@ -40,21 +40,37 @@ public class RabbitMQ {
     /**
      * 测试内容
      */
-    public static final String DIRECT_QUEUE_A = "direct.queue.a";
+    public static final String DIRECT_QUEUE_A = "direct_queue_a";
 
-    public static final String DIRECT_QUEUE_B = "direct.queue.b";
-
-
-
-    public static final String TOPIC_QUEUE_A = "topic.queue.a";
-
-    public static final String TOPIC_QUEUE_B = "topic.queue.b";
+    public static final String DIRECT_QUEUE_B = "direct_queue_b";
 
 
 
-    public static final String FANOUT_QUEUE_A = "fanout.queue.a";
+    public static final String TOPIC_QUEUE_A = "topic_queue_a";
 
-    public static final String FANOUT_QUEUE_B = "fanout.queue.b";
+    public static final String TOPIC_QUEUE_B = "topic_queue_b";
+
+
+
+    public static final String FANOUT_QUEUE_A = "fanout_queue_a";
+
+    public static final String FANOUT_QUEUE_B = "fanout_queue_b";
+
+
+    /*
+     * ************************************************************************
+     * routingKey
+     * ************************************************************************
+     */
+
+    public static final String DIRECT_ROUTINGKEY_A = "direct.routingKey.a";
+
+    public static final String DIRECT_ROUTINGKEY_B = "direct.routingKey.b";
+
+    public static final String TOPIC_ROUTINGKEY_A = "topic.routingKey.a";
+
+    public static final String TOPIC_ROUTINGKEY_B = "topic.routingKey.b";
+
 
 
     /**
@@ -64,15 +80,6 @@ public class RabbitMQ {
 
     public final static String DEAD_QUEUE = "dead_queue";
 
-    public final static String DEAD_ROUTING_KEY = "dead_routing_key";
-
-    /**
-     * 死信队列 交换机标识符
-     */
-    public static final String DEAD_LETTER_QUEUE_KEY = "x-dead-letter-exchange";
-    /**
-     * 死信队列交换机绑定键标识符
-     */
-    public static final String DEAD_LETTER_ROUTING_KEY = "x-dead-letter-routing-key";
+    public final static String DEAD_ROUTING_KEY = "dead.routingKey";
 
 }

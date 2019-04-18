@@ -61,7 +61,7 @@ public class RabbitSend implements RabbitTemplate.ConfirmCallback, RabbitTemplat
         //exchange正确，queue 错误，confirm 被回调，ack=true；returnedMessage 被回调，replyText=NO_ROUTE
 //        this.rabbitTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE, "kitzhs", message);
         //exchange，queue 都错误，confirm 被回调，ack=false，cause=channel error;
-        this.rabbitTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE, RabbitMQ.TOPIC_QUEUE_A, message);
+        this.rabbitTemplate.convertAndSend(RabbitMQ.TOPIC_EXCHANGE, RabbitMQ.TOPIC_ROUTINGKEY_A, message);
 
 
     }

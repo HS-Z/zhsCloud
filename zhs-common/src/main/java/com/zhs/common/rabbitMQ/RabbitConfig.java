@@ -42,10 +42,10 @@ public class RabbitConfig {
      * ************************************************************************
      */
 
-    @Bean
+    /*@Bean
     public Queue topicQueueA(){
         return new Queue(RabbitMQ.TOPIC_QUEUE_A,true);   //开启队列持久化（其实默认已开启）
-    }
+    }*/
 
     @Bean
     public Queue topicQueueB(){
@@ -85,12 +85,12 @@ public class RabbitConfig {
 
     @Bean
     public Binding bindingDirectExchangeA(Queue directQueueA, DirectExchange directExchange) {
-        return BindingBuilder.bind(directQueueA).to(directExchange).with(RabbitMQ.DIRECT_QUEUE_A);
+        return BindingBuilder.bind(directQueueA).to(directExchange).with(RabbitMQ.DIRECT_ROUTINGKEY_A);
     }
 
     @Bean
     public Binding bindingDirectExchangeB(Queue directQueueB, DirectExchange directExchange) {
-        return BindingBuilder.bind(directQueueB).to(directExchange).with(RabbitMQ.DIRECT_QUEUE_B);
+        return BindingBuilder.bind(directQueueB).to(directExchange).with(RabbitMQ.DIRECT_ROUTINGKEY_B);
     }
 
 
@@ -108,13 +108,13 @@ public class RabbitConfig {
 
     @Bean
     public Binding bindingTopicExchangeA(Queue topicQueueA, TopicExchange topicExchange) {
-        return BindingBuilder.bind(topicQueueA).to(topicExchange).with(RabbitMQ.TOPIC_QUEUE_A);
+        return BindingBuilder.bind(topicQueueA).to(topicExchange).with(RabbitMQ.TOPIC_ROUTINGKEY_A);
     }
 
 
     @Bean
     public Binding bindingTopicExchangeB(Queue topicQueueB,TopicExchange topicExchange) {
-        return BindingBuilder.bind(topicQueueB).to(topicExchange).with("topic.queue.#");  //*表示一个词，#表示零个或多个词
+        return BindingBuilder.bind(topicQueueB).to(topicExchange).with("topic.routingKey.#");  //*表示一个词，#表示零个或多个词
     }
 
 
@@ -154,5 +154,49 @@ public class RabbitConfig {
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
         return factory;
     }
+
+
+    /**
+     * 死信队列测试
+     * @return
+     */
+    @Bean
+    public Queue topicQueueA() {
+        Map<String, Object> args = new HashMap<>();
+        args.put("x-dead-letter-exchange", RabbitMQ.DEAD_EXCHANGE);  //死信队列交换机标识符
+//        args.put("x-message-ttl", 10000);  //设置队列中的消息过期时间，毫秒为单位
+//        args.put("x-dead-letter-routing-key", RabbitMQ.DEAD_ROUTING_KEY);   //死信队列交换机绑定键标识符
+        Queue queue = new Queue(RabbitMQ.TOPIC_QUEUE_A, true, false, false, args);
+        return queue;
+    }
+
+
+    /*
+    * 创建死信交换机
+    */
+    @Bean
+    public DirectExchange deadExchange() {
+        return new DirectExchange(RabbitMQ.DEAD_EXCHANGE);
+    }
+
+
+    /**
+     * 创建死信队列
+     * @return
+     */
+    @Bean
+    public Queue deadQueue(){
+        return new Queue(RabbitMQ.DEAD_QUEUE,true);   //开启队列持久化（其实默认已开启）
+    }
+
+
+    /*
+    * 死信队列与死信交换机绑定
+    */
+    @Bean
+    public Binding bindingDeadExchange(Queue deadQueue, DirectExchange deadExchange) {
+        return BindingBuilder.bind(deadQueue).to(deadExchange).with(RabbitMQ.DEAD_ROUTING_KEY);
+    }
+
 
 }
